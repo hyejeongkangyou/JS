@@ -2,7 +2,7 @@
 
 #### Day 01 복습
 
-###### 복사 VS 참조
+##### 복사 VS 참조
 
 I. 복사
 
@@ -103,6 +103,8 @@ var html = document.documentElement,
 * 1: 참,	0: 거짓
 
 
+-
+
 #### Event Binding
 
 *Event Binding[이벤트 바인딩]: 이벤트 속성에 함수를 연결
@@ -121,6 +123,7 @@ document.onclick = function(){
 * 기명 함수
 function initialization(){}
 
+-
 
 #### 자바스크립트의 유형 변경(형 변환, Change Data Type)
 
@@ -190,6 +193,7 @@ Escape 처리하여 'I\'m a Boy' 표현한다.(Back Slash `\` 사용)
 
 ![Escape](screenshot/using_escape.png)
 
+-
 
 #### DOM(Document Object Model)
 
