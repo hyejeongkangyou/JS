@@ -54,9 +54,10 @@ III. 변수(Variable) VS 상수(Constant)
 
 ###### 변수 정의 패턴
 
-* > var html = document.documentElement; -> `<html>`문서 객체 - 참조형 데이터, 값 참조
-* > var body = document.body; -> Legacy 방법(웹의 초창기에 사용됨. 하지만 지금도 빈번하게 사용되고 있음)
+* var html = document.documentElement; -> `<html>`문서 객체 - 참조형 데이터, 값 참조
+* var body = document.body; -> Legacy 방법(웹의 초창기에 사용됨. 하지만 지금도 빈번하게 사용되고 있음)
 
+-
 
 #### Day 02 본 수업
 
@@ -102,7 +103,7 @@ var html = document.documentElement,
 * 1: 참,	0: 거짓
 
 
-##### Event Binding
+#### Event Binding
 
 *Event Binding[이벤트 바인딩]: 이벤트 속성에 함수를 연결
  
@@ -121,7 +122,7 @@ document.onclick = function(){
 function initialization(){}
 
 
-##### 자바스크립트의 유형 변경(형 변환, Change Data Type)
+#### 자바스크립트의 유형 변경(형 변환, Change Data Type)
 
 ###### 숫자 -> 문자  
 
@@ -177,7 +178,10 @@ window.parseFloat('20.3%', 10) // 결과 : 20.3
 
 ###### 문자 유형
 
-> var me = 'I'm a Boy.'; 
+```js
+var me = 'I'm a Boy.'; 
+```
+
 * 다음 위에서와 같이 작성을 하게 되면, 아래와 같이 에러 메세지가 뜬다. 
 ![Escape](screenshot/escape(error).png)
 
@@ -187,7 +191,7 @@ Escape 처리하여 'I\'m a Boy' 표현한다.(Back Slash `\` 사용)
 ![Escape](screenshot/using_escape.png)
 
 
-##### DOM(Document Object Model)
+#### DOM(Document Object Model)
 
 ###### 문서 객체 선택 API
 
