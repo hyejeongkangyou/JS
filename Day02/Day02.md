@@ -51,6 +51,8 @@ III. 변수(Variable) VS 상수(Constant)
 
 * 상수를 공식적으로 지원하는 것은 ECMAScript 2015버전부터이다.
 
+* 웹프로그래밍에서는 상수를 많이 사용하지 않는다.
+
 
 ###### 변수 정의 패턴
 
@@ -100,6 +102,7 @@ var html = document.documentElement,
 
 ###### 논리 유형(Boolean): 참 거짓
 * 0만 아니면 참이다.(-2, -100, 3, 6 등은 참이다)
+* 부정(false): undefined, null, '', 0
 * 1: 참,	0: 거짓
 
 
@@ -121,11 +124,39 @@ document.onclick = function(){
 > var initialization = function(){}
 
 * 기명 함수
-function initialization(){}
+> function initialization(){}
+
+
+* 아래 코드와 같이 초기화를 수행하게 되면, `<script>`가 `<head>`위에 오게 되어도 에러없이 작동하게 된다.
+
+```js
+ var initialization = function(){
+	var html 			= document.documentElemet,
+		body 			= document.body,
+		page			= document.getElementById('page'),
+		page_headline 	= page.getElementsByTagName('h1'),
+		page_child 		= page.getElementsByClassName('page-child');
+
+	console.log('html', html);
+	console.log('body', body);
+	console.log('page', page);
+	console.log('page_headline', page_headline);
+	console.log('page_child', page_child);
+}
+
+window.onload = initialization;
+```
+* 변수나 객체에 함수를 담을 때 `()`을 붙이지 않는 이유는?
+* 위에서 window.onload = initialization()으로 사용하게 되면, window.onload가 실행되기 전에 함수 initialization()이 먼저 실행되게 된다.
 
 -
 
 #### 자바스크립트의 유형 변경(형 변환, Change Data Type)
+
+* 자바스크립트 언어의 숫자는 다른 언어와 달리 간단하게 정의된다.
+* 자바스크립트 언어는 자동으로 데이터 유형이 변형된다.(약점)
+* !!(느낌표 두개)를 사용하면 자동으로 형변환을 시킨다.
+
 
 ###### 숫자 -> 문자  
 
@@ -177,6 +208,8 @@ window.parseFloat('20.3%', 10) // 결과 : 20.3
 
 ```
 * parseInt(), parseFloat()에서 두번째로 들어간 `10`은 10진수를 의미하며 8, 10, 16진수로 결과값을 받을 수 있다.
+* 8진수 : 앞에 '0'를 붙임
+* 16진수 : 앞에 '0x'를 붙임
 
 
 ###### 문자 유형
@@ -220,7 +253,7 @@ h1.onclick = function() {
   // W3C Standard Method
   current_font_size = window.getComputedStyle(h1).fontSize;
 
-  // Microsoft Non Standard Method
+  // Microsoft Non Standard Method(오직 IE에서만 쓸 수 있음)
   // h1.currentStyle.fontSize;
 
 
@@ -237,3 +270,5 @@ h1_els.onclick = function() {
 };
 ```
 
+* parseInt는 내장속성이기 때문에 앞에 window가 생략되어 있음(window.parseInt)
+* trim()은 시작 따옴표부터 문자열까지의 공백 그리고 문자열에서부터 끝 따옴표까지의 공백 제거
