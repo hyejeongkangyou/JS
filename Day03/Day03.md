@@ -56,7 +56,7 @@ e.g)Boolean(), Number(), String()...
 * 함수로 만들어 보자
 ```js
 function isNumber(value){
-	return !isNumber(value);
+	return !isNaN(value);
 }
 ```
 -
