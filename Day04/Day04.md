@@ -8,10 +8,10 @@
   * null, [] 모두 object로 인식한다.
 
   * 만약 체크하고자 하는 데이터 유형이 2개 이상이라면 괄호()를 사용하여 데이터를 묶어서 체크한다.
-	  ```js
-	    console.log( typeof num + str );    // 'number'
-	    console.log( typeof (num + str) );  // 'string'
-	  ```
+  ```js
+    console.log( typeof num + str );    // 'number'
+    console.log( typeof (num + str) );  // 'string'
+  ```
 -
 
 ##### `instanceof` 키워드 사용에 주의가 필요한 부분!  
@@ -21,26 +21,26 @@
     (자바스크립트 엔진이 원시 데이터유형의 값을 마치 객체인 것처럼 사용할 수 있게 제공하는 것이다(null, undefined 제외))
   * Object는 모든 객체의 조상이기 때문에 Array를 instanceof로 타입 체크를 했을 때 Object와 같은 타입이라고 나오게 된다.
 
-	  ```js
-	    console.log(Array instanceof Object); //true
-	  ```
+  ```js
+    console.log(Array instanceof Object); //true
+  ```
 
   * 원시데이터를 올바르게 체크하기 위해서는 아래와 같이 변수에 생성자 함수로 값을 넣어야 가능하다.
 
-	```js
-		var num = 10;
-		var str = "JavaScript"
-		var boo = false
+```js
+	var num = 10;
+	var str = "JavaScript"
+	var boo = false
 
-		console.log('num instanceof Number:', num instanceof Number) // false
-		console.log('str instanceof String:', str instanceof String) // false
-		console.log('boo instanceof Boolean:', boo instanceof Boolean) // false
+	console.log('num instanceof Number:', num instanceof Number) // false
+	console.log('str instanceof String:', str instanceof String) // false
+	console.log('boo instanceof Boolean:', boo instanceof Boolean) // false
 
-		// 생성자 함수로 변수 값을 설정
-		var new_num = new Number(10);
-		console.log('new_num instanceof Number:', new_num instanceof Number) // true
+	// 생성자 함수로 변수 값을 설정
+	var new_num = new Number(10);
+	console.log('new_num instanceof Number:', new_num instanceof Number) // true
 
-	```
+```
 
   * null 유형은 instanceof 키워드를 사용하여 데이터 체크가 불가능
   * 이유는 instanceof 키워드는 객체만 판별이 가능!!!
@@ -57,56 +57,55 @@
 
 -
 
-##### 데이터 타입 헬퍼 함수 isDataType()
+##### 데이터 타입 헬퍼 함수 `isDataType()`
+```js
 
-	```js
+	var txt = "This is String"
+	// 모든 객체의 조상이자, 객체 생성자 함수
+	// 생성자 함수의 특징은 함수 이름의 첫 글자는 대문자.
+	// 생성자 함수는 .prototype 속성을 가짐.
+	console.dir(Object.prototype); // {}
 
-		var txt = "This is String"
-		// 모든 객체의 조상이자, 객체 생성자 함수
-		// 생성자 함수의 특징은 함수 이름의 첫 글자는 대문자.
-		// 생성자 함수는 .prototype 속성을 가짐.
-		console.dir(Object.prototype); // {}
+	// Object.prototype 원형 객체의 능력 중에는 .toString() 함수가 있다.
+	console.log(typeof Object.prototype.toString); // function
+	
+	// toString()은 함수로써 .call이란 능력을 사용할 수 있다.
+	// Object.prototype.toString 함수는 누군가 빌려쓸 수 있다.(자바스크립트의 데이터 유형들이 빌려 쓴다.)
+	// 
+	// Object.prototype.toString.call({data})
+	// [Object {Date}]
 
-		// Object.prototype 원형 객체의 능력 중에는 .toString() 함수가 있다.
-		console.log(typeof Object.prototype.toString); // function
-		
-		// toString()은 함수로써 .call이란 능력을 사용할 수 있다.
-		// Object.prototype.toString 함수는 누군가 빌려쓸 수 있다.(자바스크립트의 데이터 유형들이 빌려 쓴다.)
-		// 
-		// Object.prototype.toString.call({data})
-		// [Object {Date}]
+	Object.prototype.toString.call(txt);
+	// 위 코드의 수행 결과 아래와 같은 문자열이 반환된다.
+	// [object String]
 
-		Object.prototype.toString.call(txt);
-		// 위 코드의 수행 결과 아래와 같은 문자열이 반환된다.
-		// [object String]
+	// 우리는 위 문자열에서 해당 데이터 이름을 가진 것을 잘라내야(slice) 한다.
 
-		// 우리는 위 문자열에서 해당 데이터 이름을 가진 것을 잘라내야(slice) 한다.
+	// Object.prototype.toString.call({data}).slice(8, -1);
+	// 결과값 : String
 
-		// Object.prototype.toString.call({data}).slice(8, -1);
-		// 결과값 : String
+	// 위 문자열을 소문자로 변환하자
+	// Object.prototype.toString.call({data}).slice(8, -1).toLowerCase();
+	// 결과값 : string
 
-		// 위 문자열을 소문자로 변환하자
-		// Object.prototype.toString.call({data}).slice(8, -1).toLowerCase();
-		// 결과값 : string
+	// 데이터 유형 체크 헬퍼 함수 isDataType();
+	function isDataType(d) {
+	  return Object.prototype.toString.call(d).slice(8, -1).toLowerCase();
+	}
 
+```
 
-		// 데이터 유형 체크 헬퍼 함수 isDataType();
-		function isDataType(d) {
-		  return Object.prototype.toString.call(d).slice(8, -1).toLowerCase();
-		}
-
-	```
 * 여기서 Object.prototype.toString()을 call 속성으로 불러오는 이유(번역이 정확하지 않을 수 있음)
 
  * `toString`함수는 `[object [[class(속성)]]]`의 포맷으로 값을 반환하게 된다.
  * 그러나 불행히도, 특별한 내장 객체의 경우 Object.prototype.toString과 toString메소드의 기능을 중첩시키게 된다.
-	  ```js
-		[1,2,3].toString(); // 값: "1, 2, 3"
-	  ```
+  ```js
+	[1,2,3].toString(); // 값: "1, 2, 3"
+  ```
  * 그래서 우리는 `call function`을 사용하여 `원래의 toString함수 포맷`으로 사용할 수 있게 한다.
-	  ```js
-		Object.prototype.toString.call([1,2,3]); //"[object Array]"
-	  ```
+  ```js
+	Object.prototype.toString.call([1,2,3]); //"[object Array]"
+  ```
 
 -
 
@@ -128,72 +127,72 @@
 
 > if(조건){실행문}
 
-	```js
-	var condition = true;
+```js
+var condition = true;
 
-	if(condition === true){
-		console.log('Condition is TRUE');
-	}else{
-		console.log('Condition is FALSE');
-	}
-	```
+if(condition === true){
+	console.log('Condition is TRUE');
+}else{
+	console.log('Condition is FALSE');
+}
+```
 
 * 조건이 많을 경우 else if문을 함께 사용한다.
-	```js
-	var con = 18;
+```js
+var con = 18;
 
-	if( con < 8 ){
-		console.log( 'condition is '+ con);
-	}else if( con>=8 && con<=27){
-		console.log( 'condition is 8~27');
-	}else{
-		console.log('condition is more than 27')
-	}
-	```
+if( con < 8 ){
+	console.log( 'condition is '+ con);
+}else if( con>=8 && con<=27){
+	console.log( 'condition is 8~27');
+}else{
+	console.log('condition is more than 27')
+}
+```
 * 조건이 많은 경우에 if문은 좋은 선택지가 아니다.
 
 
 * if의 괄호밖으로 비교연산자가 나오게 되면 조건문이 된다.
 
-	```js
-	var drink; // undefined
+```js
+var drink; // undefined
 
-	// if(!drink){ drink = 'default drink'; }와 아래의 조건문은 같다.
-	// drink가 참이라면 그래도 값이 그대로 유지되고, 참이 아니라면 'default drink' 값을 넣게 된다.
-	drink = drink || 'default drink';
-	console.log('drink:', drink); // default drink
+// if(!drink){ drink = 'default drink'; }와 아래의 조건문은 같다.
+// drink가 참이라면 그래도 값이 그대로 유지되고, 참이 아니라면 'default drink' 값을 넣게 된다.
+drink = drink || 'default drink';
+console.log('drink:', drink); // default drink
 
-	// if(drink) { drink = 'another drink' ;}와 아래의 조건문은 같다.
-	// drink가 참이라면 drink에 'another drink' 값을 넣게 된다.
-	drink = drink && 'another drink';
-	console.log('drink:', drink); // another drink
-	```
+// if(drink) { drink = 'another drink' ;}와 아래의 조건문은 같다.
+// drink가 참이라면 drink에 'another drink' 값을 넣게 된다.
+drink = drink && 'another drink';
+console.log('drink:', drink); // another drink
+```
 
-	```js
-		var im_hungry = false;
-		
-		// im_hungry가 true라면 console.log('난 배고파') 실행, false라면 console.log('난 아직 배고프지 않아') 실행
+```js
+	var im_hungry = false;
+	
+	// im_hungry가 true라면 console.log('난 배고파') 실행, false라면 console.log('난 아직 배고프지 않아') 실행
 
-		im_hungry ? console.log('난 배고파') : console.log('난 아직 배고프지 않아');
-	```
+	im_hungry ? console.log('난 배고파') : console.log('난 아직 배고프지 않아');
+```
 
-* 다항 조건문  
+##### 다항 조건문  
 
-	```js
-		// 빨강, 검정, 노랑, 초록, 파랑
-		var charactor = '노랑';
+```js
+	// 빨강, 검정, 노랑, 초록, 파랑
+	var charactor = '노랑';
 
-		// 빨강이 아니라면 노랑을 비교. 노랑이 아니라면 초록을, 초록이 아니라면 파랑을, 파랑마저 아니라면 검정이 된다.
-		charactor === '빨강'?
-		  console.log('선택된 캐릭터는 빨강입니다.') :
-		  charactor === '노랑'?
-		    console.log('선택된 캐릭터는 노랑입니다.') :
-		    charactor === '초록'?
-		      console.log('선택된 캐릭터는 초록입니다.') :
-		        charactor === '파랑'?
-		          console.log('선택된 캐릭터는 파랑입니다.') :
-		          console.log('너는 검정이구나!');
-	```
+	// 빨강이 아니라면 노랑을 비교. 노랑이 아니라면 초록을, 초록이 아니라면 파랑을, 파랑마저 아니라면 검정이 된다.
+	charactor === '빨강'?
+	  console.log('선택된 캐릭터는 빨강입니다.') :
+	  charactor === '노랑'?
+	    console.log('선택된 캐릭터는 노랑입니다.') :
+	    charactor === '초록'?
+	      console.log('선택된 캐릭터는 초록입니다.') :
+	        charactor === '파랑'?
+	          console.log('선택된 캐릭터는 파랑입니다.') :
+	          console.log('너는 검정이구나!');
+```
 
 -
 
@@ -215,27 +214,26 @@
 * `if 구문`에서 `대입연산자(=)`를 사용하게 되면, 조건이 무조건 `참`이된다. 반드시 비교연산자를 사용해야 한다.
 
 * `==` 과 `===`의 차이
-	```js
-		var a = 0;
-		var b = '';
+```js
+	var a = 0;
+	var b = '';
 
-		// 빈문자열과 0을 모두 자동으로 형변환 시키기 떄문에 true가 나오게 된다.
-		a == b // true
+	// 빈문자열과 0을 모두 자동으로 형변환 시키기 떄문에 true가 나오게 된다.
+	a == b // true
 
-		// 엄격 패턴이기 때문에 자동으로 형변환이 일어나지 않는다.
-		a === b // false
-	```
+	// 엄격 패턴이기 때문에 자동으로 형변환이 일어나지 않는다.
+	a === b // false
+```
 
 -
 
-##### 객체 체크 헬퍼 함수 `checkDomElement()`  
-
-	```js
-	function checkDomElement(element){
-		if( isDataType(element) === 'null'){
-			console.info('현재 문서에 선택하고자 하는 문서 요소 객체는 존재하지 않습니다.');
-		}else{
-			console.log('<'+ element.nodeName.toLowerCase() + '>는 문서 요소객체입니다.');
-		}
+##### 객체 체크 헬퍼 함수 `checkDomElement()`
+```js
+function checkDomElement(element){
+	if( isDataType(element) === 'null'){
+		console.info('현재 문서에 선택하고자 하는 문서 요소 객체는 존재하지 않습니다.');
+	}else{
+		console.log('<'+ element.nodeName.toLowerCase() + '>는 문서 요소객체입니다.');
 	}
-	```
+}
+```
